@@ -1,5 +1,8 @@
 import sys
+import os
+import json
 import titus.version
+from titus.genpy import PFAEngine
 
 print "Hello, world!"
 print "Titus is installed with version:"
@@ -10,4 +13,14 @@ if (len(sys.argv) < 2):
   print "* Example: python main.py path_to_pfa.json"
   sys.exit()
 
-print "You called the program with argument", sys.argv[1]
+pfapath = sys.argv[1]
+
+if not os.path.exists(pfapath):
+  print "The path you provided does not exist:", os.path.abspath(pfapath)
+  sys.exit()
+
+engine, = PFAEngine.fromJson(json.load(open(pfapath)))
+
+if not engine.config.method == "map":
+  print "Please use the PFA 'map' method. Other methods are not supported in the MIP."
+  sys.exit()
