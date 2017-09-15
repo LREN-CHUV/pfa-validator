@@ -8,12 +8,16 @@ print "Hello, world!"
 print "Titus is installed with version:"
 print titus.version.__version__
 
-if (len(sys.argv) < 2):
-  print "Program expects exactly one argument, that should be the path to the PFA file to validate"
-  print "* Example: python main.py path_to_pfa.json"
-  sys.exit()
+pfapath = os.environ.get('PFA_PATH')
 
-pfapath = sys.argv[1]
+if (pfapath is None):
+  print ("Program expects the file path to the PFA file to validate, that should be passed as the "
+        "PFA_PATH environment variable.")
+  print "* Example:"
+  print "  PFA_PATH=path_to_pfa.json python main.py"
+  print "* Example (if run in a docker container):"
+  print "  docker run --name pfa-validator-1 -e PFA_PATH=\"path_to_pfa.json\" pfa-validator"
+  sys.exit()
 
 if not os.path.exists(pfapath):
   print "The path you provided does not exist:", os.path.abspath(pfapath)
