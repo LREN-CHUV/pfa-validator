@@ -4,27 +4,39 @@ import json
 import titus.version
 from titus.genpy import PFAEngine
 
-print "Hello, world!"
-print "Titus is installed with version:"
-print titus.version.__version__
+class colors:
+  OK = '\033[92m'
+  ERROR = '\033[91m'
+  ENDC = '\033[0m'
+
+def printError(message):
+  print colors.ERROR + "[ ERROR ] - " + colors.ENDC + message
+
+def printOk(message):
+  print colors.OK + "[ OK ] - " + colors.ENDC + message
+
+printOk("Titus is installed with version:" + titus.version.__version__)
 
 pfapath = os.environ.get('PFA_PATH')
 
 if (pfapath is None):
-  print ("Program expects the file path to the PFA file to validate, that should be passed as the "
-        "PFA_PATH environment variable.")
-  print "* Example:"
-  print "  PFA_PATH=path_to_pfa.json python main.py"
-  print "* Example (if run in a docker container):"
-  print "  docker run --name pfa-validator-1 -e PFA_PATH=\"path_to_pfa.json\" pfa-validator"
+  printError("Program expects an PFA_PATH environment variable that contains the path to "
+    "PFA file to validate. Please refer to the associated README.md file for detailed usage "
+    "instructions")
   sys.exit()
 
+printOk("The PFA_PATH environment variable was provided")
+
 if not os.path.exists(pfapath):
-  print "The path you provided does not exist:", os.path.abspath(pfapath)
+  printError("The path you provided does not exist:" + os.path.abspath(pfapath))
   sys.exit()
+
+printOk("The PFA_PATH variable is a valid path")
 
 engine, = PFAEngine.fromJson(json.load(open(pfapath)))
 
 if not engine.config.method == "map":
-  print "Please use the PFA 'map' method. Other methods are not supported in the MIP."
+  printError("The PFA method you used is not supported. Please use the PFA 'map' method")
   sys.exit()
+
+printOk("The PFA document uses the 'map' method which is supported by the MIP")
