@@ -13,4 +13,4 @@ This project does not perform cross-validation on the PFA document
 
 ### In a docker container
 1. Build the image: `docker build -t pfa-validator .`
-2. Run a container based on that image: `docker run --name pfa-validator-1 -e PFA_PATH="path_to_pfa.json" pfa-validator`
+2. Run a container based on that image: `docker run --env PFA_PATH="path_to_pfa.json" pfa-validator`
