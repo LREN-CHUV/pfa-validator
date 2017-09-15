@@ -40,10 +40,61 @@ if not os.path.exists(pfapath):
 
 printOk("The PFA_PATH variable is a valid path")
 
+# Check that a PFA engine can be correctly instantiated
+validJson = validPFASyntax = validPFASemantic = validScoringEngine = noOtherException = True
+reason = None
+
+try:
+  engine, = PFAEngine.fromJson(json.load(open(pfapath)))
+except ValueError as e:
+  validJson = False
+  reason = str(e)
+except titus.errors.PFASyntaxException as e:
+  validPFASyntax = False
+  reason = str(e)
+except titus.errors.PFASemanticException as e:
+  validPFASemantic = False
+  reason = str(e)
+except titus.errors.PFAInitializationException as e:
+  validScoringEngine = False
+  reason = str(e)
+except Exception as e:
+  noOtherException = False
+  reason = str(e)
+
+if (not validJson):
+  printError("The file provided does not contain a valid JSON document: "  + reason)
+  sys.exit()
+
+printOk("The file provided contains a valid JSON document")
+
+if (not validPFASyntax):
+  printError("The file provided does not contain a valid PFA compliant document: " + reason)
+  sys.exit()
+
+printOk("The file provided contains a PFA compliant document")
+
+if (not validPFASemantic):
+  printError("The file provided contains inconsistent PFA semantics: " + reason)
+  sys.exit()
+
+printOk("The file provided contains consistent PFA semantics")
+
+if (not validScoringEngine):
+  printError("it wasn't possible to build a valid scoring engine from the PFA document: " + reason)
+  sys.exit()
+
+printOk("A valid scoring engine could be built from the PFA document")
+
+if (not noOtherException):
+  printError("An unknown exception occurred: " + reason)
+  sys.exit()
+
+printOk("No other exception were found during engine instantiation")
+
+
 # Check that the PFA file uses the "map" method. Other methods are not supported
 # (because irrelevant) by the MIP
-engine, = PFAEngine.fromJson(json.load(open(pfapath)))
-
 if not engine.config.method == "map":
   printError("The PFA method you used is not supported. Please use the PFA 'map' method")
   sys.exit()
