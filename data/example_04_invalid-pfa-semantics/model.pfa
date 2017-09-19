@@ -1,0 +1,36 @@
+{
+  "input": {
+    "type": "record",
+    "name": "InputRecord",
+    "fields": [
+      {"name": "lefthippocampus", "type": "double"},
+      {"name": "agegroup", "type": "string"}
+    ]
+  },
+  "output": "string",
+  "action": {
+    "cond": [
+      {
+        "if": {"<": ["input.lefthippocampus", 2.0]},
+        "then": {
+          "cond": [
+            {
+              "if": {"==": ["input.not_a_valid_input", {"string": "70-79y"}]},
+              "then": {"string": "AD"}
+            },
+            {
+              "if": {"==": ["input.agegroup", {"string": "80-89y"}]},
+              "then": {"string": "AD"}
+            }
+          ],
+          "else": {"string": "MCI"}
+        }
+      },
+      {
+        "if": {"<": ["input.lefthippocampus", 1.5]},
+        "then": {"string": "AD"}
+      }
+    ],
+    "else": {"string": "CN"}
+  }
+}
