@@ -9,7 +9,7 @@ This project does not perform cross-validation on the PFA document
 ## Usage
 
 ### In python
-1. `PFA_PATH=/data/example.pfa python main.py`
+1. `PFA_PATH=data/example.pfa python main.py`
 
 ### In a docker container
 1. Build the image: `docker build -t pfa-validator .`
