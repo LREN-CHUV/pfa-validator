@@ -1,13 +1,13 @@
 # pfa-validator
 
 A small python program that validates that a PFA document is:
-- Syntaxically correct
-- Provides consistent output
+- Syntaxically correct JSON
+- Syntaxically correct PFA
+- Semantically correct PFA
 
-This project does not perform cross-validation on the PFA document
+This project does not perform cross-validation on the PFA document.
 
 ## Usage
-
 ### In python
 1. `PFA_PATH=data/example_01_valid/model.pfa python src/main.py`
 
