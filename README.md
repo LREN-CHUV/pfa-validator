@@ -8,6 +8,10 @@ A small python program that validates that a PFA document is:
 This project does not perform cross-validation on the PFA document.
 
 ## Usage
+Define a `PFA_PATH` environment variable that contains the path to the file to validate and run
+the `src/main.py` python script.
+
+## Examples
 ### In python
 1. `PFA_PATH=data/example_01_valid/model.pfa python src/main.py`
 
