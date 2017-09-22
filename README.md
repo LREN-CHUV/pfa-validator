@@ -8,6 +8,7 @@ A small python program that validates that a PFA document is:
 This project does not perform cross-validation on the PFA document.
 
 ## Usage
+[Install Titus](https://github.com/opendatagroup/hadrian/wiki/Installation#case-4-you-want-to-install-titus-in-python),
 Define a `PFA_PATH` environment variable that contains the path to the file to validate and run
 the `src/main.py` python script.
 
