@@ -13,7 +13,8 @@ the `src/main.py` python script.
 
 ## Examples
 ### In python
-1. `PFA_PATH=data/example_01_valid/model.pfa python src/main.py`
+1. [Install Titus](https://github.com/opendatagroup/hadrian/wiki/Installation#case-4-you-want-to-install-titus-in-python)
+2. `PFA_PATH=data/example_01_valid/model.pfa python src/main.py`
 
 ### In a docker container
 1. Build the image: `docker build -t pfa-validator .`
