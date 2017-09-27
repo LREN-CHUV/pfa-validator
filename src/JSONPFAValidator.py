@@ -15,6 +15,12 @@ class JSONPFAValidator(object):
         self.json_string = json_string
         self.engine = None
 
+    def load_document(self):
+        """Load the document. This method does nothing when a JSONPFAValidator object is
+        instantiated, but may be extended by subclasses so it should always be called before
+        validate()"""
+        return
+
     def get_engine(self):
         """Creates a PFA engine based on the json_string provided as constructor class. If an
         engine was already created, this method does nothing"""
