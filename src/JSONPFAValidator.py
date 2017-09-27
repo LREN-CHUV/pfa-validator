@@ -4,6 +4,7 @@ logic of the program"""
 import json
 import titus
 from titus.genpy import PFAEngine
+from titus.datatype import AvroRecord
 
 class JSONPFAValidator(object):
     """The JSONPFAValidator contains the main logic of the program. It provides a function
@@ -18,7 +19,9 @@ class JSONPFAValidator(object):
         """Creates a PFA engine based on the json_string provided as constructor class. If an
         engine was already created, this method does nothing"""
         if not self.engine:
-            self.engine = PFAEngine.fromJson(json.loads(self.json_string))
+            # pylint: disable=unbalanced-tuple-unpacking
+            engine, = PFAEngine.fromJson(json.loads(self.json_string))
+            self.engine = engine
 
         return self.engine
 
@@ -39,8 +42,7 @@ class JSONPFAValidator(object):
         engine = None
 
         try:
-            # pylint: disable=unbalanced-tuple-unpacking
-            engine, = self.get_engine()
+            engine = self.get_engine()
         except ValueError as ex:
             valid_json = False
             reason = str(ex)
@@ -79,5 +81,14 @@ class JSONPFAValidator(object):
         if not engine.config.method == "map":
             return (False, "The PFA method you used is not supported. Please use the PFA 'map' "
                            "method")
+
+        # Check that the PFA file uses a "record" type as input, that has a least one input field
+        if not isinstance(engine.config.input, AvroRecord):
+            return (False, "The PFA document must take a record as input parameter. Each field of "
+                           "the record must describe a variable")
+
+        if not engine.config.input.fields:
+            return (False, "The PFA document must describe an input record with at least one field")
+
 
         return (True, None)

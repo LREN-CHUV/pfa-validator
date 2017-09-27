@@ -4,7 +4,7 @@ JSONPFAValidator file"""
 import sys
 import os
 from utils import print_ok, print_error
-import JSONPFAValidator
+from JSONPFAValidator import JSONPFAValidator
 
 
 if __name__ == '__main__':
