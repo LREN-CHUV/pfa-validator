@@ -4,7 +4,7 @@ JSONPFAValidator file"""
 import sys
 import os
 from utils import print_ok, print_error
-from JSONPFAValidator import validate
+import JSONPFAValidator
 
 
 if __name__ == '__main__':
@@ -29,7 +29,8 @@ if __name__ == '__main__':
     with open(PFA_PATH, 'r') as content_file:
         PFA_STRING = content_file.read()
 
-    (VALID, REASON) = validate(PFA_STRING)
+    VALIDATOR = JSONPFAValidator(PFA_STRING)
+    (VALID, REASON) = VALIDATOR.validate()
 
     if not VALID:
         print_error(REASON)
