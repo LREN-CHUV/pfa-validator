@@ -1,0 +1,7 @@
+pfa-validator:
+  build: Dockerfile
+  image: jnolan/pfa-validator
+  pre:
+    - echo "Preparing pfa-validator"
+  post:
+    - echo "Finished pfa-validator"
