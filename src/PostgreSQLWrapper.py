@@ -115,14 +115,6 @@ try:
         print "A PFA document was retrieved from the database but was not valid: " + REASON
         sys.exit(1)
 
-    ENGINE = VALIDATOR.get_engine()
-
-    def get_name(field):
-        """ Extracts the name of a field from a field object"""
-        return field.name
-
-    print map(get_name, ENGINE.config.input.fields)
-
 except psycopg2.Error as ex:
     print "Error while connecting to the database " + str(ex)
     sys.exit(1)
