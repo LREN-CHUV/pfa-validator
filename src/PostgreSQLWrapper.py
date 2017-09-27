@@ -10,6 +10,7 @@ import os
 import sys
 import psycopg2
 from psycopg2 import sql
+from utils import print_ok, print_error
 from JSONPFAValidator import JSONPFAValidator
 
 DB_HOST = os.environ.get('DB_HOST')
@@ -28,23 +29,23 @@ DB_WHERE_RVALUE = os.environ.get('DB_WHERE_RVALUE')
 # Note that DB credentials are not checked, because psycopg2 will raise an exception if wrong
 # credentials were provided
 if DB_TABLE is None:
-    print ("Error: please provide the name of the table that contains the PFA file using the "
-           "DB_TABLE environment variable")
+    print_error("Error: please provide the name of the table that contains the PFA file using the "
+                "DB_TABLE environment variable")
     sys.exit(1)
 
 if DB_COLUMN is None:
-    print ("Error: please provide the name of the column that contains the PFA file using the "
-           "DB_COLUMN environment variable")
+    print_error("Error: please provide the name of the column that contains the PFA file using the "
+                "DB_COLUMN environment variable")
     sys.exit(1)
 
 if DB_WHERE_LVALUE is None:
-    print ("Error: please provide an LVALUE for the WHERE clause of the query using the "
-           "DB_WHERE_LVALUE environment variable")
+    print_error ("Error: please provide an LVALUE for the WHERE clause of the query using the "
+                 "DB_WHERE_LVALUE environment variable")
     sys.exit(1)
 
 if DB_WHERE_RVALUE is None:
-    print ("Error: please provide an RVALUE for the WHERE clause of the query using the "
-           "DB_WHERE_RVALUE environment variable")
+    print_error ("Error: please provide an RVALUE for the WHERE clause of the query using the "
+                "DB_WHERE_RVALUE environment variable")
     sys.exit(1)
 
 
@@ -99,13 +100,13 @@ try:
     CUR.execute(PREPARE_STATEMENT, (DB_WHERE_RVALUE))
     RESULT = CUR.fetchone()
     if RESULT is None:
-        print "The query parameters you provided did not return any result from the database"
+        print_error("The query parameters you provided did not return any result from the database")
         print CUR.query
         sys.exit(1)
 
     PFA = RESULT[0]
     if PFA is None:
-        print "The query parameter you provided returned an empty column"
+        print_error("The query parameter you provided returned an empty column")
         sys.exit(1)
 
     VALIDATOR = JSONPFAValidator(PFA)
@@ -114,6 +115,8 @@ try:
     if not VALID:
         print "A PFA document was retrieved from the database but was not valid: " + REASON
         sys.exit(1)
+
+    print_ok("This is a valid PFA file!")
 
 except psycopg2.Error as ex:
     print "Error while connecting to the database " + str(ex)
