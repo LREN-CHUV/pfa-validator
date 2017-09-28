@@ -99,10 +99,10 @@ class PostgreSQLJSONPFAValidator(JSONPFAValidator):
             # Second templating step: fill the RVALUE of the where clause
             cur.execute(prepared_statement, (self.db_where_rvalue))
             result = cur.fetchone()
+            print cur.query
             if result is None:
                 print_error("The query parameters you provided did not return any result from the "
                             "database")
-                print cur.query
                 sys.exit(1)
 
             json_string = result[0]
