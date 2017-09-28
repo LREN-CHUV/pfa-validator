@@ -58,4 +58,18 @@ if not VALID:
     print_error(REASON)
     sys.exit(1)
 
+DATASET_DB_HOST = os.environ.get('DATASET_DB_HOST')
+DATASET_DB_PORT = os.environ.get('DATASET_DB_PORT')
+DATASET_DB_NAME = os.environ.get('DATASET_DB_NAME')
+DATASET_DB_USER = os.environ.get('DATASET_DB_USER')
+DATASET_DB_PASSWORD = os.environ.get('DATASET_DB_PASSWORD')
+
+# Validate that the model has existing variables names
+(VALID, REASON) = VALIDATOR.validate_io(DATASET_DB_HOST, DATASET_DB_PORT, DATASET_DB_NAME,
+                                        DATASET_DB_USER, DATASET_DB_PASSWORD)
+
+if not VALID:
+    print_error(REASON)
+    sys.exit(1)
+
 print_ok("This is a valid PFA document!")

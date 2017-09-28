@@ -3,6 +3,7 @@ logic of the program"""
 
 import json
 import titus
+import psycopg2
 from titus.genpy import PFAEngine
 from titus.datatype import AvroRecord
 
@@ -98,3 +99,30 @@ class JSONPFAValidator(object):
 
 
         return (True, None)
+
+    def validate_io(self, dataset_db_host, dataset_db_port, dataset_db_name, dataset_db_user,
+                    dataset_db_password):
+        """Extracts the variables from the PFA document, connects to a PostgreSQL database,
+        retrieves values for said variables, try to input them to the PFA and see if it outputs
+        consistent data"""
+
+        prepared_statement = """
+          SELECT *
+          FROM pg_catalog.pg_tables
+          WHERE 1=1
+        """
+
+        conn = psycopg2.connect(
+            host=dataset_db_host,
+            port=dataset_db_port,
+            dbname=dataset_db_name,
+            user=dataset_db_user,
+            password=dataset_db_password
+        )
+        cur = conn.cursor()
+        cur.execute(prepared_statement)
+        rows = cur.fetchall()
+        for row in rows:
+          print row[1]
+
+        return (False, "Not implemented")
