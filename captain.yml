@@ -1,4 +1,4 @@
-pfa-validator:
+target_image:
   build: Dockerfile
   image: jnolan/pfa-validator
   pre:

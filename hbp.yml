@@ -1,0 +1,91 @@
+name: pfa-validator
+description: "Build environment for our projects on CircleCI"
+
+long_description: |
+  This project provides a build environment for our projects on CircleCI.
+
+  It provides:
+
+  * Docker (provided by CI environment)
+  * docker-compose
+  * captain
+  * pre-commit
+
+authors:
+  - author: James Nolan
+    author_email:
+      - james.nolan@chuv.ch
+    organisation: LREN-CHUV
+    organisation_badge: https://img.shields.io/badge/CHUV-LREN-AF4C64.svg
+  - author: Ludovic Claude
+    author_email:
+      - ludovic.claude@chuv.ch
+      - ludovic.claude54@gmail.com
+      - ludovic.claude54@googlemail.com
+    organisation: LREN-CHUV
+    organisation_badge: https://img.shields.io/badge/CHUV-LREN-AF4C64.svg
+
+platform: MIP
+component:
+  mip_building_block: infrastructure
+  nature: docker-image
+
+license:
+  name: MIT
+  badge: https://img.shields.io/badge/license-MIT-blue.svg
+  url: https://github.com/LREN-CHUV/pfa-validator/blob/master/LICENSE
+
+code_repositories:
+  - name: chuv-gitlab
+    visibility: private
+    url: https://___.chuv.ch/mip-infra/pfa-validator/
+    git_clone: https://___.chuv.ch/mip-infra/pfa-validator.git
+  - name: github/LREN-CHUV
+    visibility: public
+    url: https://github.io/LREN-CHUV/pfa-validator/
+    git_clone: https://github.io/LREN-CHUV/pfa-validator.git
+  - name: github/HBPMedical
+    visibility: public
+    url: https://github.io/HBPMedical/pfa-validator/
+    git_clone: https://github.io/HBPMedical/pfa-validator.git
+
+code_quality_checks:
+  codacy:
+    badge: https://api.codacy.com/project/badge/Grade/TODO
+    url: "https://www.codacy.com/app/hbp-mip/pfa-validator?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=LREN-CHUV/pfa-validator&amp;utm_campaign=Badge_Grade"
+
+testing: {}
+
+release_management:
+  current_version: 0.0.1
+  current_code_release: https://github.com/HBPMedical/pfa-validator/archive/0.0.1.zip
+  current_docker_release: docker pull hbpmip/pfa-validator:0.0.1
+  release_script: 'publish.sh'
+
+continuous_integration:
+  - name: CircleCI
+    description: "Check style and execute unit tests"
+    url: https://circleci.com/gh/LREN-CHUV/pfa-validator
+    badge: https://circleci.com/gh/LREN-CHUV/pfa-validator.svg?style=svg
+    actions:
+      - code_style
+      - unit_tests
+
+distribution:
+  docker_hub:
+    name: hbpmip/pfa-validator
+    current_tag: 0.0.1
+    url: https://hub.docker.com/r/hbpmip/pfa-validator/
+    badge: https://img.shields.io/badge/docker-hbpmip%2Fpfa--validator-008bb8.svg
+    command: docker pull hbpmip/pfa-validator:0.0.1
+
+planning:
+  github:
+    name: Issues on Github
+    url: https://github.com/LREN-CHUV/pfa-validator/issues
+
+related_projects:
+  - name: algorithm-repository
+    mip_building_block: algorithm-library
+    relationship: other-depends-on
+    relationship_scope: build

@@ -1,3 +1,5 @@
+[![CHUV](https://img.shields.io/badge/CHUV-LREN-AF4C64.svg)](https://www.unil.ch/lren/en/home.html) [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](https://github.com/LREN-CHUV/pfa-validator/blob/master/LICENSE) [![DockerHub](https://img.shields.io/badge/docker-hbpmip%2Fpfa--validator-008bb8.svg)](https://hub.docker.com/r/hbpmip/pfa-validator/) [![ImageVersion](https://images.microbadger.com/badges/version/hbpmip/pfa-validator.svg)](https://hub.docker.com/r/hbpmip/pfa-validator/tags "hbpmip/pfa-validator image tags") [![ImageLayers](https://images.microbadger.com/badges/image/hbpmip/pfa-validator.svg)](https://microbadger.com/#/images/hbpmip/pfa-validator "hbpmip/pfa-validator on microbadger") [![Codacy Badge](https://api.codacy.com/project/badge/Grade/TODO)](https://www.codacy.com/app/hbp-mip/pfa-validator?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=LREN-CHUV/pfa-validator&amp;utm_campaign=Badge_Grade) [![CircleCI](https://circleci.com/gh/LREN-CHUV/pfa-validator.svg?style=svg)](https://circleci.com/gh/LREN-CHUV/pfa-validator)
+
 # pfa-validator
 
 A small python program that validates that a PFA document is:
@@ -34,8 +36,8 @@ variable that contains the path to the PFA document to validate.
 
 #### Validate a PFA file
 1. Build the image: `docker build -t pfa-validator .`
-2. Run a container based on that image: `docker run --volume $(pwd)/data:/data --env PFA_PATH="/data/example_01_valid/model.pfa" pfa-validator`
+2. Run a container based on that image: `docker run --volume $(pwd)/data:/data --env PFA_PATH="/data/example_01_valid/model.pfa" hbpmip/pfa-validator:0.0.1`
 
 #### Validate a PFA PostgreSQL column
 1. Build the image: `docker build -t pfa-validator .`
-2. Run a container based on that image: `docker run --volume $(pwd)/data:/data --env INPUT_METHOD=POSTGRESQL --env DB_HOST=172.20.0.2 --env DB_PORT=5432 --env DB_NAME=woken --env DB_USER=... --env DB_PASSWORD=... --env DB_TABLE=job_result --env DB_COLUMN=data --env DB_WHERE_LVALUE=job_id --env DB_WHERE_RVALUE=1 pfa-validator`
+2. Run a container based on that image: `docker run --volume $(pwd)/data:/data --env INPUT_METHOD=POSTGRESQL --env DB_HOST=172.20.0.2 --env DB_PORT=5432 --env DB_NAME=woken --env DB_USER=... --env DB_PASSWORD=... --env DB_TABLE=job_result --env DB_COLUMN=data --env DB_WHERE_LVALUE=job_id --env DB_WHERE_RVALUE=1 hbpmip/pfa-validator:0.0.1`
