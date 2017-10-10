@@ -1,6 +1,6 @@
 target_image:
   build: Dockerfile
-  image: jnolan/pfa-validator
+  image: hbpmip/pfa-validator
   pre:
     - echo "Preparing pfa-validator"
   post:
