@@ -31,8 +31,8 @@ component:
   nature: docker-image
 
 license:
-  name: MIT
-  badge: https://img.shields.io/badge/license-MIT-blue.svg
+  name: Apache2.0
+  badge: https://img.shields.io/badge/license-Apache--2.0-blue.svg
   url: https://github.com/LREN-CHUV/pfa-validator/blob/master/LICENSE
 
 code_repositories:
