@@ -51,8 +51,8 @@ code_repositories:
 
 code_quality_checks:
   codacy:
-    badge: https://api.codacy.com/project/badge/Grade/TODO
-    url: "https://www.codacy.com/app/hbp-mip/pfa-validator?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=LREN-CHUV/pfa-validator&amp;utm_campaign=Badge_Grade"
+    badge: https://api.codacy.com/project/badge/Grade/96b3483a2345429fb9fc4918fa7d205b
+    url: "https://www.codacy.com/app/hbp-mip/pfa-validator?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=HBPMedical/pfa-validator&amp;utm_campaign=Badge_Grade"
 
 testing: {}
 
@@ -64,12 +64,12 @@ release_management:
 
 continuous_integration:
   - name: CircleCI
-    description: "Check style and execute unit tests"
-    url: https://circleci.com/gh/LREN-CHUV/pfa-validator
-    badge: https://circleci.com/gh/LREN-CHUV/pfa-validator.svg?style=svg
+    description: "Check style and build the Docker image"
+    url: https://circleci.com/gh/HBPMedical/pfa-validator
+    badge: https://circleci.com/gh/HBPMedical/pfa-validator.svg?style=svg
     actions:
       - code_style
-      - unit_tests
+      - build
 
 distribution:
   docker_hub:
