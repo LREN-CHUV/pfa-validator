@@ -73,3 +73,17 @@ services:
       OUT_JDBC_PASSWORD: woken
     links:
       - "it_db:db"
+
+  # Use latest as this is the image under test
+  pfa_validator:
+    image: "hbpmip/pfa-validator:latest"
+    container_name: "pfa-validator"
+    environment:
+      JOB_ID: 1
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: woken
+      DB_USER: woken
+      DB_PASSWORD: woken
+    links:
+      - "it_db:db"

@@ -39,7 +39,7 @@ trap _cleanup EXIT INT TERM
 echo "Starting the databases..."
 $DOCKER_COMPOSE up -d it_db
 echo "Build Docker images while databases are starting..."
-$DOCKER_COMPOSE build java_mip_test
+$DOCKER_COMPOSE build fake_results
 $DOCKER_COMPOSE run wait_dbs
 $DOCKER_COMPOSE run create_dbs
 
@@ -49,8 +49,8 @@ $DOCKER_COMPOSE run sample_data_db_setup
 $DOCKER_COMPOSE run woken_db_setup
 
 echo
-echo "Run the test java-mip job..."
-$DOCKER_COMPOSE run java_mip_test compute
+echo "Create some fake results for the test..."
+$DOCKER_COMPOSE run fake_results
 
 echo
 # Cleanup

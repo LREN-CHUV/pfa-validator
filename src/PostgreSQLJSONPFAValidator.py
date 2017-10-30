@@ -9,8 +9,8 @@ from JSONPFAValidator import JSONPFAValidator
 
 class PostgreSQLJSONPFAValidator(JSONPFAValidator):
     """A subclass of a JSONPFAValidator that loads the PFA from a database"""
-    def __init__(self, db_host, db_port, db_name, db_user, db_password, db_table, db_column,
-                 db_where_lvalue, db_where_rvalue):
+    def __init__(self, db_host, db_port, db_name, db_user, db_password, db_table='job_result', db_column='data',
+                 db_where_lvalue='job_id', db_where_rvalue='1'):
         JSONPFAValidator.__init__(self, '')
 
         # Safety checks: don't do anything unless the user has provided minimal information to build

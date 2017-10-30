@@ -12,6 +12,18 @@ RUN pip install psycopg2 titus==0.8.4
 
 COPY . .
 
+ENV JOB_ID=1
+ENV INPUT_METHOD=POSTGRESQL \
+    DB_HOST=db \
+    DB_PORT=5432 \
+    DB_NAME=woken \
+    DB_USER=woken \
+    DB_PASSWORD=... \
+    DB_TABLE=job_result \
+    DB_COLUMN=data \
+    DB_WHERE_LVALUE=job_id \
+    DB_WHERE_RVALUE=${JOB_ID}
+
 CMD [ "python", "./src/main.py" ]
 
 LABEL org.label-schema.build-date=$BUILD_DATE \
