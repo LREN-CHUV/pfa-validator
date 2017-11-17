@@ -6,6 +6,7 @@ import os
 from utils import print_error
 from JSONPFAValidator import JSONPFAValidator
 
+
 class FileJSONPFAValidator(JSONPFAValidator):
     """A JSONPFAValidator that loads the PFA document from the file system"""
     def __init__(self, pfa_path):
@@ -24,7 +25,6 @@ class FileJSONPFAValidator(JSONPFAValidator):
         self.pfa_path = pfa_path
 
     def load_document(self):
-        json_string = None
         with open(self.pfa_path, 'r') as content_file:
             json_string = content_file.read()
 

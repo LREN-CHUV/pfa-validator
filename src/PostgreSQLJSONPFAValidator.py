@@ -7,6 +7,7 @@ from psycopg2 import sql
 from utils import print_error
 from JSONPFAValidator import JSONPFAValidator
 
+
 class PostgreSQLJSONPFAValidator(JSONPFAValidator):
     """A subclass of a JSONPFAValidator that loads the PFA from a database"""
     def __init__(self, db_host, db_port, db_name, db_user, db_password, db_table='job_result', db_column='data',
@@ -46,7 +47,6 @@ class PostgreSQLJSONPFAValidator(JSONPFAValidator):
         self.db_column = db_column
         self.db_where_lvalue = db_where_lvalue
         self.db_where_rvalue = db_where_rvalue
-
 
     def load_document(self):
         # We build the query using environment variables passed by the user. More specifically, the
@@ -97,7 +97,7 @@ class PostgreSQLJSONPFAValidator(JSONPFAValidator):
             cur = conn.cursor()
 
             # Second templating step: fill the RVALUE of the where clause
-            cur.execute(prepared_statement, (self.db_where_rvalue))
+            cur.execute(prepared_statement, self.db_where_rvalue)
             result = cur.fetchone()
             print cur.query
             if result is None:

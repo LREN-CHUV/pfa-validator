@@ -2,10 +2,11 @@
 logic of the program"""
 
 import json
-import titus
 import psycopg2
 from titus.genpy import PFAEngine
 from titus.datatype import AvroRecord
+from titus.errors import *
+
 
 class JSONPFAValidator(object):
     """The JSONPFAValidator contains the main logic of the program. It provides a function
@@ -53,13 +54,13 @@ class JSONPFAValidator(object):
         except ValueError as ex:
             valid_json = False
             reason = str(ex)
-        except titus.errors.PFASyntaxException as ex:
+        except PFASyntaxException as ex:
             valid_pfa_syntax = False
             reason = str(ex)
-        except titus.errors.PFASemanticException as ex:
+        except PFASemanticException as ex:
             valid_pfa_semantic = False
             reason = str(ex)
-        except titus.errors.PFAInitializationException as ex:
+        except PFAInitializationException as ex:
             valid_scoring_engine = False
             reason = str(ex)
         except Exception as ex:
@@ -67,21 +68,21 @@ class JSONPFAValidator(object):
             reason = str(ex)
 
         if not valid_json:
-            return (False, "The file provided does not contain a valid JSON document: "  + reason)
+            return False, "The file provided does not contain a valid JSON document: " + reason
 
         if not valid_pfa_syntax:
             return (False, "The file provided does not contain a valid PFA compliant document: "
                     + reason)
 
         if not valid_pfa_semantic:
-            return (False, "The file provided contains inconsistent PFA semantics: " + reason)
+            return False, "The file provided contains inconsistent PFA semantics: " + reason
 
         if not valid_scoring_engine:
             return (False, "it wasn't possible to build a valid scoring engine from the PFA "
                            "document: " + reason)
 
         if not no_other_exception:
-            return (False, "An unknown exception occurred: " + reason)
+            return False, "An unknown exception occurred: " + reason
 
         # Check that the PFA file uses the "map" method. Other methods are not supported
         # (because irrelevant) by the MIP
@@ -95,12 +96,12 @@ class JSONPFAValidator(object):
                            "the record must describe a variable")
 
         if not engine.config.input.fields:
-            return (False, "The PFA document must describe an input record with at least one field")
+            return False, "The PFA document must describe an input record with at least one field"
 
+        return True, None
 
-        return (True, None)
-
-    def validate_io(self, dataset_db_host, dataset_db_port, dataset_db_name, dataset_db_user,
+    @staticmethod
+    def validate_io(dataset_db_host, dataset_db_port, dataset_db_name, dataset_db_user,
                     dataset_db_password):
         """Extracts the variables from the PFA document, connects to a PostgreSQL database,
         retrieves values for said variables, try to input them to the PFA and see if it outputs
@@ -123,6 +124,6 @@ class JSONPFAValidator(object):
         cur.execute(prepared_statement)
         rows = cur.fetchall()
         for row in rows:
-          print row[1]
+            print row[1]
 
-        return (False, "Not implemented")
+        return False, "Not implemented"

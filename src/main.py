@@ -1,3 +1,5 @@
+#!/usr/bin/env python2.7
+
 """
 This program validates a PFA file according the MIP (Medical Informatics Platform) output
 specification.
@@ -26,50 +28,56 @@ from FileJSONPFAValidator import FileJSONPFAValidator
 from PostgreSQLJSONPFAValidator import PostgreSQLJSONPFAValidator
 from utils import print_error, print_ok
 
-# Instantiate a FileJSONPFAValidator or a PostgreSQLJSONPFAValidator depending which input method
-# is requested by the user
-INPUT_METHOD = os.getenv('INPUT_METHOD', 'FILE')
 
-VALIDATOR = None
+def main():
+    # Instantiate a FileJSONPFAValidator or a PostgreSQLJSONPFAValidator depending which input method
+    # is requested by the user
+    input_method = os.getenv('INPUT_METHOD', 'FILE')
 
-if INPUT_METHOD == 'FILE':
-    PFA_PATH = os.environ.get('PFA_PATH')
-    VALIDATOR = FileJSONPFAValidator(PFA_PATH)
-    VALIDATOR.load_document()
+    validator = None
 
-elif INPUT_METHOD == 'POSTGRESQL':
-    DB_HOST = os.environ.get('DB_HOST')
-    DB_PORT = os.environ.get('DB_PORT')
-    DB_NAME = os.environ.get('DB_NAME')
-    DB_USER = os.environ.get('DB_USER')
-    DB_PASSWORD = os.environ.get('DB_PASSWORD')
-    DB_TABLE = os.environ.get('DB_TABLE')
-    DB_COLUMN = os.environ.get('DB_COLUMN')
-    DB_WHERE_LVALUE = os.environ.get('DB_WHERE_LVALUE')
-    DB_WHERE_RVALUE = os.environ.get('DB_WHERE_RVALUE')
+    if input_method == 'FILE':
+        pfa_path = os.environ.get('PFA_PATH')
+        validator = FileJSONPFAValidator(pfa_path)
+        validator.load_document()
 
-    VALIDATOR = PostgreSQLJSONPFAValidator(DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD,
-                                           DB_TABLE, DB_COLUMN, DB_WHERE_LVALUE, DB_WHERE_RVALUE)
-    VALIDATOR.load_document()
+    elif input_method == 'POSTGRESQL':
+        db_host = os.environ.get('DB_HOST')
+        db_port = os.environ.get('DB_PORT')
+        db_name = os.environ.get('DB_NAME')
+        db_user = os.environ.get('DB_USER')
+        db_password = os.environ.get('DB_PASSWORD')
+        db_table = os.environ.get('DB_TABLE')
+        db_column = os.environ.get('DB_COLUMN')
+        db_where_lvalue = os.environ.get('DB_WHERE_LVALUE')
+        db_where_rvalue = os.environ.get('DB_WHERE_RVALUE')
 
-(VALID, REASON) = VALIDATOR.validate()
+        validator = PostgreSQLJSONPFAValidator(db_host, db_port, db_name, db_user, db_password,
+                                               db_table, db_column, db_where_lvalue, db_where_rvalue)
+        validator.load_document()
 
-if not VALID:
-    print_error(REASON)
-    sys.exit(1)
+    (valid, reason) = validator.validate()
 
-DATASET_DB_HOST = os.environ.get('DATASET_DB_HOST')
-DATASET_DB_PORT = os.environ.get('DATASET_DB_PORT')
-DATASET_DB_NAME = os.environ.get('DATASET_DB_NAME')
-DATASET_DB_USER = os.environ.get('DATASET_DB_USER')
-DATASET_DB_PASSWORD = os.environ.get('DATASET_DB_PASSWORD')
+    if not valid:
+        print_error(reason)
+        sys.exit(1)
 
-# Validate that the model has existing variables names
-(VALID, REASON) = VALIDATOR.validate_io(DATASET_DB_HOST, DATASET_DB_PORT, DATASET_DB_NAME,
-                                        DATASET_DB_USER, DATASET_DB_PASSWORD)
+    dataset_db_host = os.environ.get('DATASET_DB_HOST')
+    dataset_db_port = os.environ.get('DATASET_DB_PORT')
+    dataset_db_name = os.environ.get('DATASET_DB_NAME')
+    dataset_db_user = os.environ.get('DATASET_DB_USER')
+    dataset_db_password = os.environ.get('DATASET_DB_PASSWORD')
 
-if not VALID:
-    print_error(REASON)
-    sys.exit(1)
+    # Validate that the model has existing variables names
+    (valid, reason) = validator.validate_io(dataset_db_host, dataset_db_port, dataset_db_name,
+                                            dataset_db_user, dataset_db_password)
 
-print_ok("This is a valid PFA document!")
+    if not valid:
+        print_error(reason)
+        sys.exit(1)
+
+    print_ok("This is a valid PFA document!")
+
+
+if __name__ == '__main__':
+    main()
