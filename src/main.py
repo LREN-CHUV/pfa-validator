@@ -20,6 +20,13 @@ It reads configurations from environment variables:
     DB_COLUMN: Column that contains the PFA file
     DB_WHERE_LVALUE: Left part of the SQL where close to perform
     DB_WHERE_RVALUE: Right part of the SQL where close to perform
+
+    (in order to validate that the model has existing variables names, we also need those)
+    DATASET_DB_HOST: host of the PostgreSQL server containing the data, without port
+    DATASET_DB_PORT: port where the postgresql server containing the data is listening
+    DATASET_DB_NAME: name of the DB that contains the data
+    DATASET_DB_USER: username to connect to the PostgreSQL database containing the data
+    DATASET_DB_PASSWORD: password to connect to the PostgreSQL database containing the data
 """
 
 import sys
@@ -51,9 +58,8 @@ def main():
         db_column = os.environ.get('DB_COLUMN')
         db_where_lvalue = os.environ.get('DB_WHERE_LVALUE')
         db_where_rvalue = os.environ.get('DB_WHERE_RVALUE')
-
-        validator = PostgreSQLJSONPFAValidator(db_host, db_port, db_name, db_user, db_password,
-                                               db_table, db_column, db_where_lvalue, db_where_rvalue)
+        validator = PostgreSQLJSONPFAValidator(db_host, db_port, db_name, db_user, db_password, db_table, db_column,
+                                               db_where_lvalue, db_where_rvalue)
         validator.load_document()
 
     (valid, reason) = validator.validate()
@@ -69,8 +75,8 @@ def main():
     dataset_db_password = os.environ.get('DATASET_DB_PASSWORD')
 
     # Validate that the model has existing variables names
-    (valid, reason) = validator.validate_io(dataset_db_host, dataset_db_port, dataset_db_name,
-                                            dataset_db_user, dataset_db_password)
+    (valid, reason) = validator.validate_io(dataset_db_host, dataset_db_port, dataset_db_name, dataset_db_user,
+                                            dataset_db_password)
 
     if not valid:
         print_error(reason)

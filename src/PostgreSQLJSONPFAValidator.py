@@ -55,7 +55,7 @@ class PostgreSQLJSONPFAValidator(JSONPFAValidator):
         # The traditional way to build such queries is to make a templated SQL string, and provide
         # the value of the templated variables at runtime.
         #
-        # There is however an limitation with the psycopg2's templating system: it does allows to
+        # There is however an limitation with the psycopg2's templating system: it does allow to
         # template the right value of the *where clause*. However, it does not allow to template the
         # *column names* and *table name*.
         #
