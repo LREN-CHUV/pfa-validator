@@ -10,7 +10,7 @@ from JSONPFAValidator import JSONPFAValidator
 class FileJSONPFAValidator(JSONPFAValidator):
     """A JSONPFAValidator that loads the PFA document from the file system"""
     def __init__(self, pfa_path):
-        JSONPFAValidator.__init__(self, '')
+        JSONPFAValidator.__init__(self)
         if pfa_path is None:
             print_error("Program expects an PFA_PATH environment variable that contains the path "
                         "to PFA file to validate. Please refer to the associated README.md file "

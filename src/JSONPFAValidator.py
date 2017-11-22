@@ -6,7 +6,6 @@ import psycopg2
 from titus.genpy import PFAEngine
 from titus.datatype import AvroRecord
 from titus.errors import *
-from abc import ABCMeta, abstractmethod
 
 
 class JSONPFAValidator(object):
@@ -14,18 +13,15 @@ class JSONPFAValidator(object):
     `validate` that validates a JSON PFA file, by checking its JSON syntax, its PFA syntax, its PFA
     semantics and that it uses the PFA `map` method, which is required by the MIP"""
 
-    __metaclass__ = ABCMeta
-
-    def __init__(self, json_string):
+    def __init__(self, json_string=''):
         self.json_string = json_string
         self.engine = None
 
-    @abstractmethod
     def load_document(self):
         """Load the document. This method does nothing when a JSONPFAValidator object is
         instantiated, but may be extended by subclasses so it should always be called before
         validate()"""
-        raise NotImplementedError()
+        pass
 
     def get_engine(self):
         """Creates a PFA engine based on the json_string provided as constructor class. If an
