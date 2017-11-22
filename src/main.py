@@ -73,10 +73,11 @@ def main():
     dataset_db_name = os.environ.get('DATASET_DB_NAME')
     dataset_db_user = os.environ.get('DATASET_DB_USER')
     dataset_db_password = os.environ.get('DATASET_DB_PASSWORD')
+    dataset_db_table = os.environ.get('DATASET_DB_TABLE')
 
     # Validate that the model has existing variables names
     (valid, reason) = validator.validate_io(dataset_db_host, dataset_db_port, dataset_db_name, dataset_db_user,
-                                            dataset_db_password)
+                                            dataset_db_password, dataset_db_table)
 
     if not valid:
         print_error(reason)

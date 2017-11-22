@@ -3,6 +3,7 @@ logic of the program"""
 
 import json
 import psycopg2
+from pandas import read_sql
 from titus.genpy import PFAEngine
 from titus.datatype import AvroRecord
 from titus.errors import *
@@ -53,7 +54,7 @@ class JSONPFAValidator(object):
             return False, "The file provided contains inconsistent PFA semantics: " + str(ex)
         except PFAInitializationException as ex:
             # Scoring engine check
-            return False, "it wasn't possible to build a valid scoring engine from the PFA document: " + str(ex)
+            return False, "It wasn't possible to build a valid scoring engine from the PFA document: " + str(ex)
         except Exception as ex:
             # Other exceptions
             return False, "An unknown exception occurred: " + str(ex)
@@ -75,16 +76,26 @@ class JSONPFAValidator(object):
         return True, None
 
     def validate_io(self, dataset_db_host, dataset_db_port, dataset_db_name, dataset_db_user,
-                    dataset_db_password):
+                    dataset_db_password, dataset_db_table):
         """Extracts the variables from the PFA document, connects to a PostgreSQL database,
         retrieves values for said variables, try to input them to the PFA and see if it outputs
         consistent data"""
 
-        prepared_statement = """
-          SELECT *
-          FROM pg_catalog.pg_tables
-        """
+        # Get PFAEngine
+        try:
+            engine = self.get_engine()
+        except (ValueError, PFASyntaxException, PFASemanticException, PFAInitializationException, Exception):
+            return False, "Cannot instanciate PFAEngine ! Please use validate() method for more details."
 
+        # Get input variables list
+        pfa = json.loads(self.json_string)
+        pfa_variables = [v['name'] for v in pfa['input']['fields']]
+
+        # Get data from DB
+        prepared_statement = """
+                  SELECT %s
+                  FROM %s
+                """ % (",".join(pfa_variables), dataset_db_table)
         conn = psycopg2.connect(
             host=dataset_db_host,
             port=dataset_db_port,
@@ -92,13 +103,11 @@ class JSONPFAValidator(object):
             user=dataset_db_user,
             password=dataset_db_password
         )
-        cur = conn.cursor()
-        cur.execute(prepared_statement)
-        rows = cur.fetchall()
-        for row in rows:
-            print row[1]
+        data = read_sql(prepared_statement, conn).to_dict('records')
+        conn.close()
 
-        print(self.json_string)
+        for d in data:
+            print engine.action(d)
 
         # TODO: finish implementation
 

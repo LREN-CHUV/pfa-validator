@@ -8,9 +8,9 @@ ARG VERSION
 
 WORKDIR /usr/src/app
 
-RUN pip install psycopg2 titus==0.8.4
-
 COPY . .
+
+RUN pip install -r requirements.txt
 
 ENV JOB_ID=1
 ENV INPUT_METHOD=POSTGRESQL \
