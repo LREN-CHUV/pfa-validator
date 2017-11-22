@@ -2,7 +2,8 @@
 logic of the program"""
 
 import json
-import psycopg2
+from psycopg2 import connect
+from psycopg2 import sql
 from pandas import read_sql
 from titus.genpy import PFAEngine
 from titus.datatype import AvroRecord
@@ -92,11 +93,11 @@ class JSONPFAValidator(object):
         pfa_variables = [v['name'] for v in pfa['input']['fields']]
 
         # Get data from DB
-        prepared_statement = """
-                  SELECT %s
-                  FROM %s
-                """ % (",".join(pfa_variables), dataset_db_table)
-        conn = psycopg2.connect(
+        sql_template = """SELECT {} FROM {}"""
+        prepared_statement = sql.SQL(sql_template).format(
+            sql.SQL(',').join([sql.Identifier(i) for i in pfa_variables]),
+            sql.Identifier(dataset_db_table))
+        conn = connect(
             host=dataset_db_host,
             port=dataset_db_port,
             dbname=dataset_db_name,
