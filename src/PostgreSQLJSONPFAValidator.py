@@ -97,7 +97,7 @@ class PostgreSQLJSONPFAValidator(JSONPFAValidator):
             cur = conn.cursor()
 
             # Second templating step: fill the RVALUE of the where clause
-            cur.execute(prepared_statement, self.db_where_rvalue)
+            cur.execute(prepared_statement, [self.db_where_rvalue])
             result = cur.fetchone()
             print cur.query
             if result is None:
