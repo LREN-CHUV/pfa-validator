@@ -107,9 +107,16 @@ class JSONPFAValidator(object):
         data = read_sql(prepared_statement, conn).to_dict('records')
         conn.close()
 
-        for d in data:
-            print engine.action(d)
+        try:
+            print "Executing PFA..."
+            for d in data:
+                print "Input data: %s" % str(d)
+                print "Result: %s" % str(engine.action(d))
+        except PFARuntimeException as ex:
+            return False, "A PFA library function encountered an exceptional case: " + str(ex)
+        except PFAUserException as ex:
+            return False, "The PFA has an explicit error directive: " + str(ex)
+        except PFATimeoutException as ex:
+            return False, "The PFA has a timeout setup and the calculation takes too long: " + str(ex)
 
-        # TODO: finish implementation
-
-        return False, "Not implemented"
+        return True, None
