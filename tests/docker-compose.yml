@@ -79,11 +79,21 @@ services:
     image: "hbpmip/pfa-validator:latest"
     container_name: "pfa-validator"
     environment:
-      JOB_ID: 1
-      DB_HOST: db
+      INPUT_METHOD: POSTGRESQL
+      DB_HOST: 172.20.0.2
       DB_PORT: 5432
       DB_NAME: woken
       DB_USER: woken
       DB_PASSWORD: woken
+      DB_TABLE: job_result
+      DB_COLUMN: data
+      DB_WHERE_LVALUE: job_id
+      DB_WHERE_RVALUE: 1
+      DATASET_DB_HOST: db
+      DATASET_DB_PORT: 5432
+      DATASET_DB_NAME: data
+      DATASET_DB_USER: data
+      DATASET_DB_PASSWORD: data
+      DATASET_DB_TABLE: sample_data
     links:
       - "it_db:db"

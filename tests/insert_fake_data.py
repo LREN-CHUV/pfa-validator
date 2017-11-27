@@ -16,7 +16,7 @@ def main():
     db_table = os.environ.get('DB_TABLE', 'job_result')
     db_column = os.environ.get('DB_COLUMN', 'data')
 
-    # TODO: finish implementation
+    # TODO: insert JSON documents from data folder into DB
 
 
 if __name__ == '__main__':

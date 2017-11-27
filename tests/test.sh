@@ -53,5 +53,9 @@ echo "Create some fake results for the test..."
 $DOCKER_COMPOSE run fake_results
 
 echo
+echo "Run the PFA validator..."
+$DOCKER_COMPOSE run pfa_validator
+
+echo
 # Cleanup
  _cleanup
