@@ -7,13 +7,11 @@
 import os
 import sys
 import fnmatch
-import uuid
 import psycopg2
 from psycopg2 import sql
 
 
 DATA_DIR = './data'
-NODE = 'test'
 
 
 def main():
@@ -24,6 +22,9 @@ def main():
     db_user = os.environ.get('DB_USER', 'woken')
     db_password = os.environ.get('DB_PASSWORD')
     db_table = os.environ.get('DB_TABLE', 'job_result')
+
+    # Get node
+    node = os.environ.get('NODE', 'test_node')
 
     # Connect to DB
     try:
@@ -43,8 +44,9 @@ def main():
     pfa_files = find_pfa_files(DATA_DIR)
 
     # Insert document into DB
+    job_id_iter = 1
     for pfa_file in pfa_files:
-        job_id = str(uuid.uuid1())
+        job_id = str(job_id_iter)  # job_id = str(uuid.uuid1())
         with open(pfa_file, 'r') as f:
             data = f.read()
         sql_template = """
@@ -54,8 +56,9 @@ def main():
         prepared_statement = sql.SQL(sql_template).format(
             sql.Identifier(db_table)
         )
-        cur.execute(prepared_statement, [job_id, NODE, data])
+        cur.execute(prepared_statement, [job_id, node, data])
         conn.commit()
+        job_id_iter += 1
     conn.close()
 
 

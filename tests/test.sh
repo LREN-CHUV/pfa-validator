@@ -54,7 +54,12 @@ $DOCKER_COMPOSE run fake_results
 
 echo
 echo "Run the PFA validator..."
-$DOCKER_COMPOSE run pfa_validator
+NB_JOBS=$(ls -l */*/*.pfa | wc -l)
+for (( i=1; i<=$NB_JOBS; i++ ))
+do
+    echo "Validating job $i"
+    $DOCKER_COMPOSE run -e "DB_WHERE_RVALUE=$i" pfa_validator
+done
 
 echo
 # Cleanup
