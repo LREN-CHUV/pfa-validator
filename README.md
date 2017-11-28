@@ -22,15 +22,15 @@ variable that contains the path to the PFA document to validate.
   * the database's credentials: `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER` and `DB_PASSWORD`
   * the parameters of the query to perform: `DB_TABLE` `DB_COLUMN` `DB_WHERE_LVALUE` `DB_WHERE_RVALUE`
 
-In addition, the program will also need the following environment variables to be set up in order to get some 
-validation data: `DATASET_DB_HOST`, `DATASET_DB_PORT`, `DATASET_DB_NAME`, `DATASET_DB_USER`, `DATASET_DB_PASSWORD` 
+In addition, the program will also need the following environment variables to be set up in order to get some
+validation data: `DATASET_DB_HOST`, `DATASET_DB_PORT`, `DATASET_DB_NAME`, `DATASET_DB_USER`, `DATASET_DB_PASSWORD`
 and `DATASET_DB_TABLE`
 
 ### Examples
 
 #### Validate a PFA file
 1. Build the image: `docker build -t pfa-validator .`
-2. Run a container based on that image: 
+2. Run a container based on that image:
 
 ```sh
     docker run --volume $(pwd)/data:/data \
