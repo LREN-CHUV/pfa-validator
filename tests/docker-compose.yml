@@ -94,6 +94,6 @@ services:
       DATASET_DB_NAME: data
       DATASET_DB_USER: data
       DATASET_DB_PASSWORD: data
-      DATASET_DB_TABLE: data
+      DATASET_DB_TABLE: churn
     links:
       - "it_db:db"

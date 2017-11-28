@@ -3,34 +3,34 @@
     "type": "record",
     "name": "InputRecord",
     "fields": [
-      {"name": "lefthippocampus", "type": "double"},
-      {"name": "agegroup", "type": "string"}
+      {"name": "night_charge", "type": "double"},
+      {"name": "state", "type": "string"}
     ]
   },
   "output": "string",
   "action": {
     "cond": [
       {
-        "if": {"<": ["input.lefthippocampus", 2.0]},
+        "if": {"<": ["input.night_charge", 8.2]},
         "then": {
           "cond": [
             {
-              "if": {"==": ["input.not_a_valid_input", {"string": "70-79y"}]},
-              "then": {"string": "AD"}
+              "if": {"==": ["input.not_a_valid_input", {"string": "LA"}]},
+              "then": {"string": "churn"}
             },
             {
-              "if": {"==": ["input.agegroup", {"string": "80-89y"}]},
-              "then": {"string": "AD"}
+              "if": {"==": ["input.state", {"string": "NY"}]},
+              "then": {"string": "churn"}
             }
           ],
-          "else": {"string": "MCI"}
+          "else": {"string": "no_churn"}
         }
       },
       {
-        "if": {"<": ["input.lefthippocampus", 1.5]},
-        "then": {"string": "AD"}
+        "if": {"<": ["input.night_charge", 7.1]},
+        "then": {"string": "churn"}
       }
     ],
-    "else": {"string": "CN"}
+    "else": {"string": "no_churn"}
   }
 }

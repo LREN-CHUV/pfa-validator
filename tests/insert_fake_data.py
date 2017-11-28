@@ -58,6 +58,7 @@ def main():
         )
         cur.execute(prepared_statement, [job_id, node, data])
         conn.commit()
+        print "Successfully inserted JSON from %s using job ID %s" % (pfa_file, job_id)
         job_id_iter += 1
     conn.close()
 
@@ -67,6 +68,7 @@ def find_pfa_files(folder):
     for root, dirnames, filenames in os.walk(folder):
         for filename in fnmatch.filter(filenames, '*.pfa'):
             matches.append(os.path.join(root, filename))
+    matches.sort()
     return matches
 
 
