@@ -41,7 +41,7 @@ and `DATASET_DB_TABLE`
     --env DATASET_DB_USER=sample \
     --env DATASET_DB_PASSWORD=... \
     --env DATASET_DB_TABLE=features \
-    hbpmip/pfa-validator:0.8.4-3
+    hbpmip/pfa-validator:0.9.0-0
 ```
 
 #### Validate a PFA PostgreSQL column
@@ -66,7 +66,7 @@ and `DATASET_DB_TABLE`
     --env DATASET_DB_USER=sample \
     --env DATASET_DB_PASSWORD=... \
     --env DATASET_DB_TABLE=features \
-    hbpmip/pfa-validator:0.8.4-3
+    hbpmip/pfa-validator:0.9.0-0
 ```
 
 NOTE: If you don't want to use Docker, you can install the dependencies with: `pip install -r requirements.txt`
