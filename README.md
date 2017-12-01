@@ -20,7 +20,8 @@ variable that contains the path to the PFA document to validate.
 * **When fetching the PFA document from a PostgreSQL database**, the program expects the following environment variables:
   * `INPUT_METHOD` that must be set to `POSTGRESQL`
   * the database's credentials: `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER` and `DB_PASSWORD`
-  * the parameters of the query to perform: `DB_TABLE` `DB_COLUMN` `DB_WHERE_LVALUE` `DB_WHERE_RVALUE`
+  * the parameters of the query to perform: `DB_TABLE` `DB_COLUMN`
+  * the job ID (used to check the job_id column and get the right PFA document): `JOB_ID`
 
 In addition, the program will also need the following environment variables to be set up in order to get some
 validation data: `FEATURES_DB_HOST`, `FEATURES_DB_PORT`, `FEATURES_DB_NAME`, `FEATURES_DB_USER`, `FEATURES_DB_PASSWORD`
@@ -51,6 +52,7 @@ and `FEATURES_DB_TABLE`
 ```sh
   docker run \
     --env INPUT_METHOD=POSTGRESQL \
+    --env JOB_ID=1
     --env DB_HOST=172.20.0.2 \
     --env DB_PORT=5432 \
     --env DB_NAME=woken \
@@ -58,8 +60,6 @@ and `FEATURES_DB_TABLE`
     --env DB_PASSWORD=... \
     --env DB_TABLE=job_result \
     --env DB_COLUMN=data \
-    --env DB_WHERE_LVALUE=job_id \
-    --env DB_WHERE_RVALUE=1 \
     --env FEATURES_DB_HOST=db \
     --env FEATURES_DB_PORT=5432 \
     --env FEATURES_DB_NAME=sample \
@@ -71,3 +71,7 @@ and `FEATURES_DB_TABLE`
 
 NOTE: If you don't want to use Docker, you can install the dependencies with: `pip install -r requirements.txt`
 and run this program using Python2. The environment variables still have to be set up.
+
+## TODO
+
+* Allow validation of YAML formatted PFA document
