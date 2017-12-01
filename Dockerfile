@@ -23,12 +23,12 @@ ENV INPUT_METHOD=POSTGRESQL \
     DB_COLUMN=data \
     DB_WHERE_LVALUE=job_id \
     DB_WHERE_RVALUE=${JOB_ID} \
-    DATASET_DB_HOST=db \
-    DATASET_DB_PORT=5432 \
-    DATASET_DB_NAME=sample \
-    DATASET_DB_USER=sample \
-    DATASET_DB_PASSWORD=... \
-    DATASET_DB_TABLE=features
+    FEATURES_DB_HOST=db \
+    FEATURES_DB_PORT=5432 \
+    FEATURES_DB_NAME=sample \
+    FEATURES_DB_USER=sample \
+    FEATURES_DB_PASSWORD=... \
+    FEATURES_DB_TABLE=features
 
 CMD [ "python", "./src/main.py" ]
 

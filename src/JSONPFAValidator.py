@@ -76,8 +76,8 @@ class JSONPFAValidator(object):
 
         return True, None
 
-    def validate_io(self, dataset_db_host, dataset_db_port, dataset_db_name, dataset_db_user,
-                    dataset_db_password, dataset_db_table):
+    def validate_io(self, features_db_host, features_db_port, features_db_name, features_db_user,
+                    features_db_password, features_db_table):
         """Extracts the variables from the PFA document, connects to a PostgreSQL database,
         retrieves values for said variables, try to input them to the PFA and see if it outputs
         consistent data"""
@@ -96,13 +96,13 @@ class JSONPFAValidator(object):
         sql_template = """SELECT {} FROM {}"""
         prepared_statement = sql.SQL(sql_template).format(
             sql.SQL(',').join([sql.Identifier(i) for i in pfa_variables]),
-            sql.Identifier(dataset_db_table))
+            sql.Identifier(features_db_table))
         conn = connect(
-            host=dataset_db_host,
-            port=dataset_db_port,
-            dbname=dataset_db_name,
-            user=dataset_db_user,
-            password=dataset_db_password
+            host=features_db_host,
+            port=features_db_port,
+            dbname=features_db_name,
+            user=features_db_user,
+            password=features_db_password
         )
         data = read_sql(prepared_statement, conn).to_dict('records')
         conn.close()

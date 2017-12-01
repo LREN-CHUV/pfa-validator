@@ -89,11 +89,11 @@ services:
       DB_TABLE: job_result
       DB_COLUMN: data
       DB_WHERE_LVALUE: job_id
-      DATASET_DB_HOST: db
-      DATASET_DB_PORT: 5432
-      DATASET_DB_NAME: data
-      DATASET_DB_USER: data
-      DATASET_DB_PASSWORD: data
-      DATASET_DB_TABLE: churn
+      FEATURES_DB_HOST: db
+      FEATURES_DB_PORT: 5432
+      FEATURES_DB_NAME: data
+      FEATURES_DB_USER: data
+      FEATURES_DB_PASSWORD: data
+      FEATURES_DB_TABLE: churn
     links:
       - "it_db:db"

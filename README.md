@@ -23,8 +23,8 @@ variable that contains the path to the PFA document to validate.
   * the parameters of the query to perform: `DB_TABLE` `DB_COLUMN` `DB_WHERE_LVALUE` `DB_WHERE_RVALUE`
 
 In addition, the program will also need the following environment variables to be set up in order to get some
-validation data: `DATASET_DB_HOST`, `DATASET_DB_PORT`, `DATASET_DB_NAME`, `DATASET_DB_USER`, `DATASET_DB_PASSWORD`
-and `DATASET_DB_TABLE`
+validation data: `FEATURES_DB_HOST`, `FEATURES_DB_PORT`, `FEATURES_DB_NAME`, `FEATURES_DB_USER`, `FEATURES_DB_PASSWORD`
+and `FEATURES_DB_TABLE`
 
 ### Examples
 
@@ -35,12 +35,12 @@ and `DATASET_DB_TABLE`
 ```sh
     docker run --volume $(pwd)/data:/data \
     --env PFA_PATH="/data/example_01_valid/model.pfa" \
-    --env DATASET_DB_HOST=db \
-    --env DATASET_DB_PORT=5432 \
-    --env DATASET_DB_NAME=sample \
-    --env DATASET_DB_USER=sample \
-    --env DATASET_DB_PASSWORD=... \
-    --env DATASET_DB_TABLE=features \
+    --env FEATURES_DB_HOST=db \
+    --env FEATURES_DB_PORT=5432 \
+    --env FEATURES_DB_NAME=sample \
+    --env FEATURES_DB_USER=sample \
+    --env FEATURES_DB_PASSWORD=... \
+    --env FEATURES_DB_TABLE=features \
     hbpmip/pfa-validator:0.9.0-0
 ```
 
@@ -60,12 +60,12 @@ and `DATASET_DB_TABLE`
     --env DB_COLUMN=data \
     --env DB_WHERE_LVALUE=job_id \
     --env DB_WHERE_RVALUE=1 \
-    --env DATASET_DB_HOST=db \
-    --env DATASET_DB_PORT=5432 \
-    --env DATASET_DB_NAME=sample \
-    --env DATASET_DB_USER=sample \
-    --env DATASET_DB_PASSWORD=... \
-    --env DATASET_DB_TABLE=features \
+    --env FEATURES_DB_HOST=db \
+    --env FEATURES_DB_PORT=5432 \
+    --env FEATURES_DB_NAME=sample \
+    --env FEATURES_DB_USER=sample \
+    --env FEATURES_DB_PASSWORD=... \
+    --env FEATURES_DB_TABLE=features \
     hbpmip/pfa-validator:0.9.0-0
 ```
 

@@ -22,11 +22,11 @@ It reads configurations from environment variables:
     DB_WHERE_RVALUE: Right part of the SQL where close to perform
 
     (in order to validate that the model has existing variables names, we also need those)
-    DATASET_DB_HOST: host of the PostgreSQL server containing the data, without port
-    DATASET_DB_PORT: port where the postgresql server containing the data is listening
-    DATASET_DB_NAME: name of the DB that contains the data
-    DATASET_DB_USER: username to connect to the PostgreSQL database containing the data
-    DATASET_DB_PASSWORD: password to connect to the PostgreSQL database containing the data
+    FEATURES_DB_HOST: host of the PostgreSQL server containing the data, without port
+    FEATURES_DB_PORT: port where the postgresql server containing the data is listening
+    FEATURES_DB_NAME: name of the DB that contains the data
+    FEATURES_DB_USER: username to connect to the PostgreSQL database containing the data
+    FEATURES_DB_PASSWORD: password to connect to the PostgreSQL database containing the data
 """
 
 import sys
@@ -68,16 +68,16 @@ def main():
         print_error(reason)
         sys.exit(1)
 
-    dataset_db_host = os.environ.get('DATASET_DB_HOST')
-    dataset_db_port = os.environ.get('DATASET_DB_PORT')
-    dataset_db_name = os.environ.get('DATASET_DB_NAME')
-    dataset_db_user = os.environ.get('DATASET_DB_USER')
-    dataset_db_password = os.environ.get('DATASET_DB_PASSWORD')
-    dataset_db_table = os.environ.get('DATASET_DB_TABLE')
+    features_db_host = os.environ.get('FEATURES_DB_HOST')
+    features_db_port = os.environ.get('FEATURES_DB_PORT')
+    features_db_name = os.environ.get('FEATURES_DB_NAME')
+    features_db_user = os.environ.get('FEATURES_DB_USER')
+    features_db_password = os.environ.get('FEATURES_DB_PASSWORD')
+    features_db_table = os.environ.get('FEATURES_DB_TABLE')
 
     # Validate that the model has existing variables names
-    (valid, reason) = validator.validate_io(dataset_db_host, dataset_db_port, dataset_db_name, dataset_db_user,
-                                            dataset_db_password, dataset_db_table)
+    (valid, reason) = validator.validate_io(features_db_host, features_db_port, features_db_name, features_db_user,
+                                            features_db_password, features_db_table)
 
     if not valid:
         print_error(reason)
