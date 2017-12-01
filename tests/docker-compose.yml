@@ -75,12 +75,14 @@ services:
     links:
       - "it_db:db"
 
-  # Use latest as this is the image under test
   pfa_validator:
-    image: "hbpmip/pfa-validator:latest"
+    build:
+      context: ..
+      dockerfile: Dockerfile
     container_name: "pfa-validator"
     environment:
       INPUT_METHOD: POSTGRESQL
+      JOB_ID: 1
       DB_HOST: db
       DB_PORT: 5432
       DB_NAME: woken
@@ -88,7 +90,6 @@ services:
       DB_PASSWORD: woken
       DB_TABLE: job_result
       DB_COLUMN: data
-      DB_WHERE_LVALUE: job_id
       FEATURES_DB_HOST: db
       FEATURES_DB_PORT: 5432
       FEATURES_DB_NAME: data
