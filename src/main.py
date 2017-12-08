@@ -18,8 +18,9 @@ It reads configurations from environment variables:
     DB_PASSWORD: password to connect to the PostgreSQL database
     DB_TABLE: Table that contains the PFA file
     DB_COLUMN: Column that contains the PFA file
-    DB_WHERE_LVALUE: Left part of the SQL where close to perform
-    DB_WHERE_RVALUE: Right part of the SQL where close to perform
+    DB_WHERE_LVALUE: Left part of the SQL where close to perform, you should use the default value: 'job_id'
+    DB_WHERE_RVALUE: Right part of the SQL where close to perform, you should use the JOB_ID and ignore this parameter
+    JOB_ID: Job ID, this will override the DB_WHERE_RVALUE parameter
 
     (in order to validate that the model has existing variables names, we also need those)
     FEATURES_DB_HOST: host of the PostgreSQL server containing the data, without port
@@ -58,6 +59,9 @@ def main():
         db_column = os.environ.get('DB_COLUMN')
         db_where_lvalue = os.environ.get('DB_WHERE_LVALUE')
         db_where_rvalue = os.environ.get('DB_WHERE_RVALUE')
+        job_id = os.environ.get('JOB_ID')
+        if job_id:
+            db_where_rvalue = job_id
         validator = PostgreSQLJSONPFAValidator(db_host, db_port, db_name, db_user, db_password, db_table, db_column,
                                                db_where_lvalue, db_where_rvalue)
         validator.load_document()
