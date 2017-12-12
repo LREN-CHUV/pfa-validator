@@ -75,3 +75,10 @@ and run this program using Python2. The environment variables still have to be s
 ## TODO
 
 * Allow validation of YAML formatted PFA document
+
+# Acknowledgements
+
+This work has been funded by the European Union Seventh Framework Program (FP7/2007­2013) under grant agreement no. 604102 (HBP)
+
+This work is part of SP8 of the Human Brain Project (SGA1).
+
