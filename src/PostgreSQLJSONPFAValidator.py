@@ -78,6 +78,7 @@ class PostgreSQLJSONPFAValidator(JSONPFAValidator):
           SELECT {}
           FROM {}
           WHERE {} = %s
+          AND "shape" = 'pfa_json'
           LIMIT 1
         """
         prepared_statement = sql.SQL(sql_template).format(
@@ -115,3 +116,4 @@ class PostgreSQLJSONPFAValidator(JSONPFAValidator):
         except psycopg2.Error as ex:
             print "Error while connecting to the database " + str(ex)
             sys.exit(1)
+

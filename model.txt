@@ -1,0 +1,47 @@
+{
+	"input": {
+		"type": "record",
+		"fields": [{
+			"name": "input1",
+			"type": "double"
+		},
+		{
+			"name": "input2",
+			"type": "double"
+		}]
+	},
+	"output": {
+		"type": "record",
+		"fields": [{
+			"name": "a",
+			"type": "double"
+		},
+		{
+			"name": "b",
+			"type": "double"
+		}]
+	},
+	"action": {
+		"+": [{
+			"if": {
+				"&&": [true,
+				false]
+			},
+			"then": [1.3,
+			3.0],
+			"else": [0,
+			0]
+		},
+		{
+			"if": {
+				"&&": [true]
+			},
+			"then": [3.2,
+			32.5],
+			"else": [0,
+			0]
+		},
+		[1,
+		1]]
+	}
+}

@@ -51,7 +51,7 @@ def main():
             data = f.read()
         sql_template = """
                   INSERT INTO {}
-                  (job_id, node, data) VALUES (%s, %s, %s)
+                  (job_id, node, data, shape) VALUES (%s, %s, %s, 'pfa_json')
                 """
         prepared_statement = sql.SQL(sql_template).format(
             sql.Identifier(db_table)
