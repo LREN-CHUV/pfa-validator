@@ -8,4 +8,4 @@ docker run \
     --env FEATURES_DB_USER=sample \
     --env FEATURES_DB_PASSWORD=featurespwd \
     --env FEATURES_DB_TABLE=features \
-    hbpmip/pfa-validator:0.10.1-0
+    hbpmip/pfa-validator:0.10.1-1
