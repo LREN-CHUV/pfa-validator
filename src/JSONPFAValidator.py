@@ -104,6 +104,8 @@ class JSONPFAValidator(object):
             user=features_db_user,
             password=features_db_password
         )
+        print "Select data..."
+        print (prepared_statement)
         data = read_sql(prepared_statement, conn).to_dict('records')
         conn.close()
 
