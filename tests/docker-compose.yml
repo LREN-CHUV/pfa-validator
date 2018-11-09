@@ -35,7 +35,7 @@ services:
       - it_db
 
   sample_data_db_setup:
-    image: "hbpmip/sample-data-db-setup:0.6.1"
+    image: "hbpmip/sample-data-db-setup:0.6.2"
     container_name: "sample-data-db-setup"
     environment:
       FLYWAY_DBMS: postgresql
@@ -48,7 +48,7 @@ services:
     - "it_db:db"
 
   woken_db_setup:
-    image: "hbpmip/woken-db-setup:1.2.1"
+    image: "hbpmip/woken-db-setup:1.2.2"
     container_name: "woken-db-setup"
     environment:
       FLYWAY_DBMS: postgresql
