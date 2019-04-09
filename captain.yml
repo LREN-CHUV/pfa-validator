@@ -1,7 +1,0 @@
-target_image:
-  build: Dockerfile
-  image: hbpmip/pfa-validator
-  pre:
-    - echo "Preparing pfa-validator"
-  post:
-    - echo "Finished pfa-validator"
