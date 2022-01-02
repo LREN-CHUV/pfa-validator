@@ -1,3 +1,4 @@
 psycopg2-binary==2.7.4
 titus==0.8.4
 pandas==0.22.0
+numpy>=1.22.0 # not directly required, pinned by Snyk to avoid a vulnerability
